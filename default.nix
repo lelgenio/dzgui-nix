@@ -34,7 +34,8 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
-    install -Dm777 -T dzgui.sh $out/bin/.dzgui-unwrapped_
+    install -DT dzgui.sh $out/bin/.dzgui-unwrapped_
+    install -DT ${./dzgui.desktop} $out/share/applications/dzgui.desktop
     makeWrapper $out/bin/.dzgui-unwrapped_ $out/bin/dzgui \
       --prefix PATH ':' ${lib.makeBinPath runtimeDeps}
   '';
