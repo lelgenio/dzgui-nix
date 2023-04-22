@@ -26,7 +26,11 @@ stdenv.mkDerivation rec {
     # steam
   ];
 
-  patchPhase = ''
+  patches = [
+    ./dont-write-desktop-entry-during-runtime.patch
+  ];
+
+  postPatch = ''
     sed -i \
       -e 's|/usr/bin/zenity|${pkgs.gnome.zenity}/bin/zenity|' \
       -e 's|2>/dev/null||' \
