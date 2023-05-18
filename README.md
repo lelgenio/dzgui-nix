@@ -2,9 +2,9 @@ Install dzgui on nix-based systems
 
 # Installation
 
-## Using flake profiles (manual updates)
+## Using flake profiles (not recommended)
 
-```
+```sh
 # install
 nix profile install github:lelgenio/dzgui-nix
 
@@ -12,60 +12,74 @@ nix profile install github:lelgenio/dzgui-nix
 nix profile upgrade '.*dzgui.*'
 ```
 
-## As a flake input (auto updates)
+### You will also *need* to set `vm.max_map_count`:
 
-Flake users are expected to have a `flake.nix` file and a `configuration.nix`.
+This is done automatically if you install via NixOs modules as shown 
 
-Note that this is just a suggestion on how to to it, you may have different configuration structure.
+#### on NixOs systems:
 
-1 - Add `dzgui` as a flake input:
+```nix
+# configuration.nix
+{
+    boot.kernel.sysctl."vm.max_map_count" = 1048576;
+}
+```
+
+#### on non-NixOs systems:
+
+```sh
+sudo sysctl -w vm.max_map_count | sudo tee /etc/sysctl.d/dayz.conf
+```
+
+## As a NixOs module (recommended)
+
+Flake users are assumed to have a `flake.nix` file and a `configuration.nix`.
+
+1 - Add `dzgui-nix` as a flake input:
 
 ```nix
 # flake.nix
 {
-    inputs.dzgui = {
+    inputs.dzgui-nix = {
         # url of this repository, may change in the future
         url = "github:lelgenio/dzgui-nix";
         # save storage by not having duplicates of packages
         inputs.nixpkgs.follows = "nixpkgs";
     };
-    # outputs...
+    # other inputs...
 }
 ```
 
-2 - Pass `inputs` to your to you system config
+2 - Add the `dzgui-nix` module to your system configuration, and enable it:
 
 ```nix
 # flake.nix
 {
     outputs = inputs@{pkgs, ...}: {
         nixosConfigurations.your-hostname-here = lib.nixosSystem {
-            specialArgs = { inherit inputs; };
-            # modules...
+            modules = [ 
+                # Add the module
+                inputs.dzgui-nix.nixosModules.default 
+                # Enable it, this can also go in configuration.nix
+                { programs.dzgui.enable = true; }
+                # other modules...
+            ];
         };
     };
 }
 ```
 
-3 - Add dzgui as a package in your system:
-
-```nix
-# configuration.nix
-# this is the file generate by `nixos-generate-config`
-{ inputs, pkgs, ... }: {
-    environment.systemPackages = [
-        inputs.dzgui.packages.${pkgs.system}.dzgui
-    ];
-}
-```
-
-4 - Rebuild your system
+3 - Rebuild your system
 
 ```sh
 nixos-rebuild --switch --flake .#your-hostname-here
 ```
 
-Now dzgui will auto update together with your system.
+Now dzgui will update together with your flake:
+
+```sh
+nix flake update
+```
 
 ## On non flake systems
 

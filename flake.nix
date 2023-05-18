@@ -30,7 +30,7 @@
 
       nixosModules = rec {
         default = dzgui;
-        dzgui = import ./module.nix {inherit self;};
+        dzgui = import ./module.nix { inherit self; };
       };
 
       devShells.${system}.default =
