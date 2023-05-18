@@ -1,7 +1,7 @@
 { pkgs, lib, stdenv, fetchFromGitHub, makeWrapper }:
 stdenv.mkDerivation rec {
   pname = "dzgui";
-  version = "0.1";
+  version = "3.3.0";
 
   src = fetchFromGitHub {
     owner = "aclist";
@@ -27,21 +27,18 @@ stdenv.mkDerivation rec {
   ];
 
   patches = [
-    ./dont-write-desktop-entry-during-runtime.patch
+    ./patches/dont-hardcode-zenity.patch
+    ./patches/dont-write-desktop-entry-during-runtime.patch
+    ./patches/dont-check-map-count.patch
   ];
-
-  postPatch = ''
-    sed -i \
-      -e 's|/usr/bin/zenity|${pkgs.gnome.zenity}/bin/zenity|' \
-      -e 's|2>/dev/null||' \
-      dzgui.sh
-  '';
 
   installPhase = ''
     install -DT dzgui.sh $out/bin/.dzgui-unwrapped_
-    install -DT ${./dzgui.desktop} $out/share/applications/dzgui.desktop
     makeWrapper $out/bin/.dzgui-unwrapped_ $out/bin/dzgui \
       --prefix PATH ':' ${lib.makeBinPath runtimeDeps}
+
+    install -DT ${./dzgui.desktop} $out/share/applications/dzgui.desktop
+    install -DT images/dzgui $out/share/icons/hicolor/256x256/apps/dzgui.png
   '';
 
   meta = with lib; {

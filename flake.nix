@@ -1,7 +1,7 @@
 {
   description = "DayZ TUI/GUI server browser";
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-22.11";
     dzgui = {
       url = "github:aclist/dztui";
       flake = false;

@@ -1,0 +1,13 @@
+diff --git a/dzgui.sh b/dzgui.sh
+index 6f98976..8293d45 100755
+--- a/dzgui.sh
++++ b/dzgui.sh
+@@ -37,7 +37,7 @@ notify_url="$stable_url/helpers/d.html"
+ notify_img_url="$stable_url/helpers/d.webp"
+ forum_url="https://github.com/aclist/dztui/discussions"
+ version_file="$config_path/versions"
+-steamsafe_zenity="/usr/bin/zenity"
++steamsafe_zenity="zenity"
+
+ #TODO: prevent connecting to offline servers
+ #TODO: abstract zenity title params and dimensions

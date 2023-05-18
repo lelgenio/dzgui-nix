@@ -3,11 +3,11 @@
     "dzgui": {
       "flake": false,
       "locked": {
-        "lastModified": 1677659849,
-        "narHash": "sha256-yTa/CN+GN/+UIp/2501iYRVoo4X6HcZdaS62gutBI4o=",
+        "lastModified": 1684281410,
+        "narHash": "sha256-mjkEouCBiAu4so1kolmHbZAyH63LSGlrv4JANcj8+Vc=",
         "owner": "aclist",
         "repo": "dztui",
-        "rev": "c7c93558ae130e5281cebb3231f32377d37d21e2",
+        "rev": "8f66d12131f639116436dc41adf45632ab4251b5",
         "type": "github"
       },
       "original": {
@@ -18,16 +18,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1678470307,
-        "narHash": "sha256-OEeMUr3ueLIXyW/OaFUX5jUdimyQwMg/7e+/Q0gC/QE=",
+        "lastModified": 1684280442,
+        "narHash": "sha256-nC1/kfh6tpMQSLQalbNTNnireIlxvLLugrjZdasNh+I=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0c4800d579af4ed98ecc47d464a5e7b0870c4b1f",
+        "rev": "6c591e7adc514090a77209f56c9d0c551ab8530d",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-unstable",
+        "ref": "nixos-22.11",
         "type": "indirect"
       }
     },
