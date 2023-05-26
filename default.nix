@@ -30,6 +30,7 @@ stdenv.mkDerivation rec {
     ./patches/dont-hardcode-zenity.patch
     ./patches/dont-write-desktop-entry-during-runtime.patch
     ./patches/dont-check-map-count.patch
+    ./patches/send-noop-before-installing-mods.patch
   ];
 
   installPhase = ''
