@@ -26,10 +26,10 @@ stdenv.mkDerivation rec {
     # steam
   ];
 
-  patches = [
-    ./patches/dont-hardcode-zenity.patch
-    ./patches/dont-write-desktop-entry-during-runtime.patch
-    ./patches/dont-check-map-count.patch
+  patches = lib.pipe ./patches [
+    builtins.readDir
+    lib.attrNames
+    (map (name: ./patches/${name}))
   ];
 
   installPhase = ''

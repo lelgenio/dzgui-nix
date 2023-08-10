@@ -1,0 +1,133 @@
+From bb2598d7f9f07489a3ddf67943389ea44bef36e0 Mon Sep 17 00:00:00 2001
+From: lelgenio <lelgenio@disroot.org>
+Date: Wed, 9 Aug 2023 23:06:14 -0300
+Subject: [PATCH 3/3] don't check version
+
+---
+ dzgui.sh | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/dzgui.sh b/dzgui.sh
+index a3105ba..96419f3 100755
+--- a/dzgui.sh
++++ b/dzgui.sh
+@@ -373,7 +373,7 @@ config(){
+ 	fi
+ 
+ }
+-steam_deck_mods(){	
++steam_deck_mods(){
+ 	until [[ -z $diff ]]; do
+ 		next=$(echo -e "$diff" | head -n1)
+ 		$steamsafe_zenity --question --ok-label="Open" --cancel-label="Cancel" --title="DZGUI" --text="Missing mods. Click [Open] to open mod $next in Steam Workshop and subscribe to it by clicking the green Subscribe button. After the mod is downloaded, return to this menu to continue validation." --width=500 2>/dev/null
+@@ -402,7 +402,7 @@ foreground(){
+ 	if [[ $(command -v wmctrl) ]]; then
+ 		wmctrl -a "DZG Watcher"
+ 	else
+-		
++
+ 		local window_id=$(xdotool search --name "DZG Watcher")
+ 		xdotool windowactivate $window_id
+ 	fi
+@@ -414,7 +414,7 @@ manual_mod_install(){
+ 	else
+ 		local ex="/tmp/dzc.tmp"
+ 		[[ -f $ex ]] && rm $ex
+-		watcher(){	
++		watcher(){
+ 		readarray -t stage_mods <<< "$diff"
+ 		for((i=0;i<${#stage_mods[@]};i++)); do
+ 			[[ -f $ex ]] && return 1
+@@ -763,7 +763,7 @@ test_bm_api(){
+ 		-d "filter[game]=$game" | grep -E "^HTTP")
+ 	[[ $code =~ 401 ]] && echo 1
+ 	[[ $code =~ 200 ]] && echo 0
+-	
++
+ }
+ add_steam_api(){
+ 		[[ $(test_steam_api) -eq 1 ]] && return 1
+@@ -1265,7 +1265,7 @@ exclude_empty(){
+ filter_maps(){
+ 	echo "# Filtering maps"
+ 	[[ $ret -eq 98 ]] && return
+-	local maps=$(echo "$response" | jq -r '.[].map//empty|ascii_downcase' | sort -u) 
++	local maps=$(echo "$response" | jq -r '.[].map//empty|ascii_downcase' | sort -u)
+ 	local map_ct=$(echo "$maps" | wc -l)
+ 	local map_sel=$(echo "$maps" | $steamsafe_zenity --list --column="Check" --width=1200 --height=800 2>/dev/null --title="DZGUI" --text="Found $map_ct map types")
+ 	echo "[DZGUI] Selected '$map_sel'"
+@@ -1300,7 +1300,7 @@ local_latlon(){
+ 	else
+ 		local local_ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
+ 	fi
+-	local url="http://ip-api.com/json/$local_ip" 
++	local url="http://ip-api.com/json/$local_ip"
+ 	local res=$(curl -Ls "$url" | jq -r '"\(.lat),\(.lon)"')
+ 	local_lat=$(echo "$res" | awk -F, '{print $1}')
+ 	local_lon=$(echo "$res" | awk -F, '{print $2}')
+@@ -1357,7 +1357,7 @@ check_geo_file(){
+ 		echo "100"
+ 		}
+ 		run > >($steamsafe_zenity --pulsate --progress --auto-close --width=500 2>/dev/null)
+-	fi 
++	fi
+ }
+ choose_filters(){
+ 	if [[ $is_steam_deck -eq 0 ]]; then
+@@ -1367,7 +1367,7 @@ choose_filters(){
+ 	if [[ $sels =~ Keyword ]]; then
+ 		search=$($steamsafe_zenity --entry --text="Search (case insensitive)" --width=500 --title="DZGUI" 2>/dev/null | awk '{print tolower($0)}')
+ 		[[ -z $search ]] && { ret=97; return; }
+-	fi	
++	fi
+ 	[[ -z $sels ]] && return
+ 	filters=$(echo "$sels" | sed 's/|/, /g;s/ (untick to select from map list)//')
+ }
+@@ -1406,7 +1406,7 @@ write_fifo(){
+ 	for((i=0;i<${#qport[@]};i++)); do
+ 		printf  "%s\n%s\n%s\n%03d\n%03d\n%s\n%s:%s\n%s\n" "${map[$i]}" "${name[$i]}" "${gametime[$i]}" \
+ 		"${players[$i]}" "${max[$i]}" "$(get_dist ${addr[$i]})" "${addr[$i]}" "${gameport[$i]}" "${qport[$i]}" >> $fifo
+-		done 
++		done
+ }
+ munge_servers(){
+ 	if [[ ! "$sels" =~ "All maps" ]]; then
+@@ -1439,7 +1439,7 @@ munge_servers(){
+ 	if [[ $is_steam_deck -eq 0 ]]; then
+ 		sd_res="--width=1920 --height=1080"
+ 	fi
+-	
++
+ 	write_fifo &
+ 	pid=$!
+ 	local sel=$($steamsafe_zenity --text="$(pagination)" --title="DZGUI" --list --column=Map --column=Name --column=Gametime --column=Players --column=Max --column=Distance --column=IP --column=Qport $sd_res --print-column=7,8 --separator=%% 2>/dev/null < <(while true; do cat $fifo; done))
+@@ -1582,7 +1582,7 @@ check_ping(){
+ 	ms=$(ping -c 1 -W 1 "$ping_ip" | awk -Ftime= '/time=/ {print $2}')
+ 	if [[ -z $ms ]]; then
+ 		echo "Timeout"
+-	else	
++	else
+ 		echo "$ms"
+ 	fi
+ }
+@@ -1794,7 +1794,7 @@ check_map_count(){
+ 			local pass
+ 			logger INFO "Prompting user for sudo escalation"
+ 			pass=$($steamsafe_zenity --password)
+-			local rc	
++			local rc
+ 			logger INFO "Return code is $rc"
+ 			[[ $rc -eq 1 ]] && exit 1
+ 			local ct=$(sudo -S <<< "$pass" sh -c "sysctl -q vm.max_map_count | awk -F'= ' '{print \$2}'")
+@@ -1890,7 +1890,7 @@ initial_setup(){
+ 	run_depcheck
+ 	watcher_deps
+ 	check_architecture
+-	check_version
++	# check_version
+ 	# check_map_count
+ 	fetch_helpers
+ 	config
+-- 
+2.40.1
+

@@ -1,13 +1,25 @@
+From cf6849bbc18d3be5322a2c5db8399f99f6dfb450 Mon Sep 17 00:00:00 2001
+From: lelgenio <lelgenio@disroot.org>
+Date: Wed, 17 May 2023 22:47:53 -0300
+Subject: [PATCH 1/3] don't hardcode zenity
+
+---
+ dzgui.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/dzgui.sh b/dzgui.sh
-index 6f98976..8293d45 100755
+index a638903..ede9b1e 100755
 --- a/dzgui.sh
 +++ b/dzgui.sh
-@@ -37,7 +37,7 @@ notify_url="$stable_url/helpers/d.html"
+@@ -39,7 +39,7 @@ notify_url="$stable_url/helpers/d.html"
  notify_img_url="$stable_url/helpers/d.webp"
  forum_url="https://github.com/aclist/dztui/discussions"
  version_file="$config_path/versions"
 -steamsafe_zenity="/usr/bin/zenity"
 +steamsafe_zenity="zenity"
-
+ 
  #TODO: prevent connecting to offline servers
  #TODO: abstract zenity title params and dimensions
+-- 
+2.40.1
+

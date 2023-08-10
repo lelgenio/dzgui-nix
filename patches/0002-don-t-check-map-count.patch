@@ -1,0 +1,25 @@
+From 036c8e3891adc5fa848f4a8ae2ef5d3ebf450a30 Mon Sep 17 00:00:00 2001
+From: lelgenio <lelgenio@disroot.org>
+Date: Wed, 17 May 2023 22:36:46 -0300
+Subject: [PATCH 2/3] don't check map count
+
+---
+ dzgui.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dzgui.sh b/dzgui.sh
+index ede9b1e..a3105ba 100755
+--- a/dzgui.sh
++++ b/dzgui.sh
+@@ -1891,7 +1891,7 @@ initial_setup(){
+ 	watcher_deps
+ 	check_architecture
+ 	check_version
+-	check_map_count
++	# check_map_count
+ 	fetch_helpers
+ 	config
+ 	steam_deps
+-- 
+2.40.1
+
