@@ -3,11 +3,11 @@
     "dzgui": {
       "flake": false,
       "locked": {
-        "lastModified": 1690331564,
-        "narHash": "sha256-fh4KkC36dfhLCurbpdcWIitEu1tFUwrNRciApTTf5OU=",
+        "lastModified": 1692283637,
+        "narHash": "sha256-bObVQHKfJdpot895dhEMDbuWYgRVSXiyKKGVk6PPU7k=",
         "owner": "aclist",
         "repo": "dztui",
-        "rev": "08669fa435dd0114f127e642d16e61c43b435da2",
+        "rev": "2e992f0d9bb60451cba221dd1ddc50b49386b00e",
         "type": "github"
       },
       "original": {
