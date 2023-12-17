@@ -3,11 +3,11 @@
     "dzgui": {
       "flake": false,
       "locked": {
-        "lastModified": 1692283637,
-        "narHash": "sha256-bObVQHKfJdpot895dhEMDbuWYgRVSXiyKKGVk6PPU7k=",
+        "lastModified": 1702780245,
+        "narHash": "sha256-cdW5LN2Q7eYW8xIqKPQfeYPd7e6VdJGaoA9NMHesCrE=",
         "owner": "aclist",
         "repo": "dztui",
-        "rev": "2e992f0d9bb60451cba221dd1ddc50b49386b00e",
+        "rev": "28323f3edb8fa747dc559d1939ccdd7729e4e3a1",
         "type": "github"
       },
       "original": {
@@ -18,16 +18,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1691592289,
-        "narHash": "sha256-Lqpw7lrXlLkYra33tp57ms8tZ0StWhbcl80vk4D90F8=",
+        "lastModified": 1702539185,
+        "narHash": "sha256-KnIRG5NMdLIpEkZTnN5zovNYc0hhXjAgv6pfd5Z4c7U=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9034b46dc4c7596a87ab837bb8a07ef2d887e8c7",
+        "rev": "aa9d4729cbc99dabacb50e3994dcefb3ea0f7447",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "release-23.05",
+        "ref": "nixpkgs-unstable",
         "type": "indirect"
       }
     },
