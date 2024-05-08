@@ -1,21 +1,46 @@
-{ pkgs, lib, stdenv, fetchFromGitHub, makeWrapper }:
+{ lib
+, stdenv
+, fetchFromGitHub
+, makeWrapper
+, curl
+, jq
+, python3
+, wmctrl
+, xdotool
+, gnome
+, gobject-introspection
+, wrapGAppsHook
+}:
 stdenv.mkDerivation rec {
   pname = "dzgui";
-  version = "3.3.0";
+  version = "5.2.3";
 
   src = fetchFromGitHub {
     owner = "aclist";
     repo = "dztui";
-    rev = "10c29c0542a07fb81b5922f96b416e3a2e8079cc";
-    sha256 = "sha256-VmW0ohXK+9CAr4yGaA/NSW7+E1vUvZthom8MculmOEs=";
+    rev = "release/${version}";
+    sha256 = "sha256-fXFu2p9jxYfmsrQ1DBbd6pLcgRs/8HJiH6t4A5KevyQ=";
   };
 
-  nativeBuildInputs = [ makeWrapper ];
+  postPatch = ''
+    sed -i 's@/usr/bin/zenity@zenity@g' dzgui.sh
+    sed -i '/    check_map_count/d' dzgui.sh
+    sed -i '/    check_version/d' dzgui.sh
+  '';
 
-  runtimeDeps = with pkgs; [
+  nativeBuildInputs = [
+    makeWrapper
+    gobject-introspection
+    wrapGAppsHook
+  ];
+
+  runtimeDeps = [
     curl
     jq
-    python3
+    (python3.withPackages (p: with p; [
+      pygobject3
+    ]))
+
     wmctrl
     xdotool
     gnome.zenity
@@ -26,19 +51,17 @@ stdenv.mkDerivation rec {
     # steam
   ];
 
-  patches = lib.pipe ./patches [
-    builtins.readDir
-    lib.attrNames
-    (map (name: ./patches/${name}))
-  ];
-
   installPhase = ''
-    install -DT dzgui.sh $out/bin/.dzgui-unwrapped_
-    makeWrapper $out/bin/.dzgui-unwrapped_ $out/bin/dzgui \
-      --prefix PATH ':' ${lib.makeBinPath runtimeDeps}
+    install -DT dzgui.sh $out/bin/dzgui
 
     install -DT ${./dzgui.desktop} $out/share/applications/dzgui.desktop
     install -DT images/dzgui $out/share/icons/hicolor/256x256/apps/dzgui.png
+  '';
+
+  preFixup = ''
+    gappsWrapperArgs+=(
+      --prefix PATH ':' ${lib.makeBinPath runtimeDeps}
+    )
   '';
 
   meta = with lib; {

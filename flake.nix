@@ -2,12 +2,8 @@
   description = "DayZ TUI/GUI server browser";
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    dzgui = {
-      url = "github:aclist/dztui";
-      flake = false;
-    };
   };
-  outputs = { self, nixpkgs, dzgui, ... }:
+  outputs = { self, nixpkgs, ... }:
     let
       # DayZ only runs on x86_64 systems
       system = "x86_64-linux";
@@ -24,7 +20,7 @@
 
       overlays = {
         default = (final: _: {
-          dzgui = (final.callPackage ./. { }).overrideAttrs (_: { src = dzgui; });
+          dzgui = (final.callPackage ./. { });
         });
       };
 

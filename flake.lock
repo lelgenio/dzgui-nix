@@ -1,28 +1,12 @@
 {
   "nodes": {
-    "dzgui": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1702780245,
-        "narHash": "sha256-cdW5LN2Q7eYW8xIqKPQfeYPd7e6VdJGaoA9NMHesCrE=",
-        "owner": "aclist",
-        "repo": "dztui",
-        "rev": "28323f3edb8fa747dc559d1939ccdd7729e4e3a1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "aclist",
-        "repo": "dztui",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1702539185,
-        "narHash": "sha256-KnIRG5NMdLIpEkZTnN5zovNYc0hhXjAgv6pfd5Z4c7U=",
+        "lastModified": 1714562304,
+        "narHash": "sha256-Mr3U37Rh6tH0FbaDFu0aZDwk9mPAe7ASaqDOGgLqqLU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "aa9d4729cbc99dabacb50e3994dcefb3ea0f7447",
+        "rev": "bcd44e224fd68ce7d269b4f44d24c2220fd821e7",
         "type": "github"
       },
       "original": {
@@ -33,7 +17,6 @@
     },
     "root": {
       "inputs": {
-        "dzgui": "dzgui",
         "nixpkgs": "nixpkgs"
       }
     }
