@@ -26,6 +26,7 @@ stdenv.mkDerivation rec {
     sed -i 's@/usr/bin/zenity@zenity@g' dzgui.sh
     sed -i '/    check_map_count/d' dzgui.sh
     sed -i '/    check_version/d' dzgui.sh
+    sed -i '/    write_desktop_file >/d' dzgui.sh
   '';
 
   nativeBuildInputs = [
