@@ -1,0 +1,44 @@
+name: Update
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 'outdated'
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Install jq
+        run: nix profile install nixpkgs#jq
+      - name: Get current version
+        id: current-version
+        run: nix-instantiate --eval --json -A dzgui.version | jq -r '"version=\"\(.)\""' >> $GITHUB_OUTPUT
+      - name: Run update script
+        run: ./package/update.sh
+      - name: Get new version
+        id: new-version
+        run: nix-instantiate --eval --json -A dzgui.version | jq -r '"version=\"\(.)\""' >> $GITHUB_OUTPUT
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code || echo "changes=true" >> $GITHUB_OUTPUT
+      - name: Build new package
+        run: nix build -L
+      - name: Create Pull Request
+        if: ${{ steps.current-version.outputs.version != steps.new-version.outputs.version }}
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          base: outdated
+          add-paths: ./package/
+          commit-message: update ${{ steps.current-version.outputs.version }} -> ${{ steps.new-version.outputs.version }}
+          title: '[Automated] Update dzgui ${{ steps.new-version.outputs.version }}'
+          body: 'Automated changes by GitHub Actions'
+          branch: automated-update
+          delete-branch: true
