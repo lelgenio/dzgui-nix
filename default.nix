@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     owner = "aclist";
     repo = "dztui";
     rev = "release/${version}";
-    sha256 = "";
+    sha256 = "sha256-bTn5O/NhrP0zwmOlvSLofYzB6PifXYT1KCF2MErRFZo=";
   };
 
   postPatch = ''
