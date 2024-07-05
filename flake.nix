@@ -20,7 +20,7 @@
 
       overlays = {
         default = (final: _: {
-          dzgui = (final.callPackage ./. { });
+          dzgui = (final.callPackage ./package { });
         });
       };
 
