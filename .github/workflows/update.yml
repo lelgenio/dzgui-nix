@@ -34,7 +34,6 @@ jobs:
         if: ${{ steps.current-version.outputs.version != steps.new-version.outputs.version }}
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.BOT_TOKEN }}
           base: outdated
           add-paths: ./package/
           commit-message: update ${{ steps.current-version.outputs.version }} -> ${{ steps.new-version.outputs.version }}
