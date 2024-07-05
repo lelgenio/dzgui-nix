@@ -1,4 +1,4 @@
-name: Update
+name: update
 
 on:
   schedule:
@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: 'outdated'
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Install jq
@@ -34,7 +32,7 @@ jobs:
         if: ${{ steps.current-version.outputs.version != steps.new-version.outputs.version }}
         uses: peter-evans/create-pull-request@v5
         with:
-          base: outdated
+          base: main
           add-paths: ./package/
           commit-message: update ${{ steps.current-version.outputs.version }} -> ${{ steps.new-version.outputs.version }}
           title: '[Automated] Update dzgui ${{ steps.new-version.outputs.version }}'
