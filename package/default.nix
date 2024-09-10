@@ -13,13 +13,13 @@
 }:
 stdenv.mkDerivation rec {
   pname = "dzgui";
-  version = "5.3.1";
+  version = "5.3.0";
 
   src = fetchFromGitHub {
     owner = "aclist";
     repo = "dztui";
-    rev = "8e6cf7e7925c6e6bc390a10d286ba1e7b2562d08";
-    sha256 = "sha256-+FlAYTDpjDDmCAFxgmgHVnXGcIw63e5ia38zKbYI2ZI=";
+    rev = "c2c7b37b904a05cdf0c86dbf3d22ef91728577b9";
+    sha256 = "sha256-iC/c2MBFjvT0wVnKlpX4kL7fVa3BbjpmbEyjCU+aUyY=";
   };
 
   postPatch = ''
