@@ -17,7 +17,7 @@
       };
 
       overlays = {
-        default = (final: _: { dzgui = (final.callPackage ./package { }); });
+        default = import ./overlay.nix;
       };
 
       nixosModules = rec {
@@ -32,15 +32,7 @@
       checks.${system}.nixosCheck =
         (nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [
-            self.nixosModules.default
-            {
-              programs.dzgui.enable = true;
-
-              boot.isContainer = true;
-              system.stateVersion = "24.05";
-            }
-          ];
+          modules = [ ./nixos-test/configuration.nix ];
         }).config.system.build.toplevel;
     };
 }
