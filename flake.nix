@@ -31,5 +31,18 @@
 
       devShells.${system}.default =
         mkShell { buildInputs = self.packages.${system}.default.runtimeDeps; };
+
+      checks.${system}.nixosCheck = (nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          self.nixosModules.default
+          {
+            programs.dzgui.enable = true;
+
+            boot.isContainer = true;
+            system.stateVersion = "24.05";
+          }
+        ];
+      }).config.system.build.toplevel;
     };
 }
