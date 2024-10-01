@@ -1,15 +1,16 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, makeWrapper
-, curl
-, jq
-, python3
-, wmctrl
-, xdotool
-, gnome
-, gobject-introspection
-, wrapGAppsHook
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  makeWrapper,
+  curl,
+  jq,
+  python3,
+  wmctrl,
+  xdotool,
+  gnome,
+  gobject-introspection,
+  wrapGAppsHook,
 }:
 stdenv.mkDerivation rec {
   pname = "dzgui";
@@ -38,9 +39,7 @@ stdenv.mkDerivation rec {
   runtimeDeps = [
     curl
     jq
-    (python3.withPackages (p: with p; [
-      pygobject3
-    ]))
+    (python3.withPackages (p: with p; [ pygobject3 ]))
 
     wmctrl
     xdotool

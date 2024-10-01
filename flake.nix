@@ -3,7 +3,8 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
   };
-  outputs = { self, nixpkgs, ... }:
+  outputs =
+    { self, nixpkgs, ... }:
     let
       # DayZ only runs on x86_64 systems
       system = "x86_64-linux";
@@ -12,16 +13,15 @@
         overlays = [ self.overlays.default ];
       };
     in
-    with pkgs; {
+    with pkgs;
+    {
       packages.${system} = rec {
         default = dzgui;
         inherit (pkgs) dzgui;
       };
 
       overlays = {
-        default = (final: _: {
-          dzgui = (final.callPackage ./package { });
-        });
+        default = (final: _: { dzgui = (final.callPackage ./package { }); });
       };
 
       nixosModules = rec {
@@ -29,20 +29,22 @@
         dzgui = import ./module.nix { inherit self; };
       };
 
-      devShells.${system}.default =
-        mkShell { buildInputs = self.packages.${system}.default.runtimeDeps; };
+      devShells.${system}.default = mkShell {
+        buildInputs = self.packages.${system}.default.runtimeDeps;
+      };
 
-      checks.${system}.nixosCheck = (nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          self.nixosModules.default
-          {
-            programs.dzgui.enable = true;
+      checks.${system}.nixosCheck =
+        (nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            self.nixosModules.default
+            {
+              programs.dzgui.enable = true;
 
-            boot.isContainer = true;
-            system.stateVersion = "24.05";
-          }
-        ];
-      }).config.system.build.toplevel;
+              boot.isContainer = true;
+              system.stateVersion = "24.05";
+            }
+          ];
+        }).config.system.build.toplevel;
     };
 }
