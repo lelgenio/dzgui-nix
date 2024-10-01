@@ -8,16 +8,12 @@
     let
       # DayZ only runs on x86_64 systems
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [ self.overlays.default ];
-      };
+      pkgs = import nixpkgs { inherit system; };
     in
-    with pkgs;
     {
       packages.${system} = rec {
         default = dzgui;
-        inherit (pkgs) dzgui;
+        dzgui = pkgs.callPackage ./package { };
       };
 
       overlays = {
@@ -26,10 +22,10 @@
 
       nixosModules = rec {
         default = dzgui;
-        dzgui = import ./module.nix { inherit self; };
+        dzgui = import ./module.nix;
       };
 
-      devShells.${system}.default = mkShell {
+      devShells.${system}.default = pkgs.mkShell {
         buildInputs = self.packages.${system}.default.runtimeDeps;
       };
 
