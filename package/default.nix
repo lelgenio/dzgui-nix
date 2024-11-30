@@ -1,6 +1,7 @@
 {
   lib,
   stdenv,
+  pkgs,
   fetchFromGitHub,
   makeWrapper,
   curl,
@@ -43,7 +44,7 @@ stdenv.mkDerivation rec {
 
     wmctrl
     xdotool
-    gnome.zenity
+    pkgs.zenity
 
     ## Here we don't declare steam as a dependency because
     ## we could either use the native or flatpack version
