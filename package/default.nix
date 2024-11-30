@@ -44,7 +44,8 @@ stdenv.mkDerivation rec {
 
     wmctrl
     xdotool
-    pkgs.zenity
+    # TODO: remove 24.05 compatibility when it goes EOL
+    (pkgs.zenity or gnome.zenity)
 
     ## Here we don't declare steam as a dependency because
     ## we could either use the native or flatpack version
