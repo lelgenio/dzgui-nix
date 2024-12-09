@@ -2,7 +2,7 @@ Install dzgui on nix-based systems
 
 # Installation
 
-## Using flake profiles (not recommended)
+## Using flake profiles
 
 ```sh
 # install
@@ -12,26 +12,28 @@ nix profile install github:lelgenio/dzgui-nix
 nix profile upgrade '.*dzgui.*'
 ```
 
-### You will also *need* to set `vm.max_map_count`:
-
-This is done automatically if you install via NixOs modules as shown 
-
-#### on NixOs systems:
+## On non flake NixOs systems
 
 ```nix
 # configuration.nix
+{ pkgs, ... }:
+let
+  dzgui-nix = pkgs.fetchFromGitHub {
+    owner = "lelgenio";
+    repo = "dzgui-nix";
+    rev = "995dd52adc6fe5cbbd4530a9f2add88e1e04d0da";
+    hash = "sha256-giMAU0PqMOqTe3zQax4rTbhu5efyFcaQu3EP5CqPIaU=";
+  };
+  dzgui = (pkgs.callPackage "${dzgui-nix}/package");
+in
 {
-    boot.kernel.sysctl."vm.max_map_count" = 1048576;
+  environment.systemPackages = [
+    dzgui
+  ];
 }
 ```
 
-#### on non-NixOs systems:
-
-```sh
-sudo sysctl -w vm.max_map_count | sudo tee /etc/sysctl.d/dayz.conf
-```
-
-## As a NixOs module (recommended)
+## As part of a NixOs system flake
 
 Flake users are assumed to have a `flake.nix` file and a `configuration.nix`.
 
@@ -50,18 +52,19 @@ Flake users are assumed to have a `flake.nix` file and a `configuration.nix`.
 }
 ```
 
-2 - Add the `dzgui-nix` module to your system configuration, and enable it:
+2 - Add the `dzgui` package to your environment packages:
 
 ```nix
 # flake.nix
 {
     outputs = inputs@{pkgs, ...}: {
         nixosConfigurations.your-hostname-here = lib.nixosSystem {
-            modules = [ 
-                # Add the module
-                inputs.dzgui-nix.nixosModules.default 
-                # Enable it, this can also go in configuration.nix
-                { programs.dzgui.enable = true; }
+            modules = [
+                {
+                  environment.systemPackages = [
+                    inputs.dzgui-nix.packages.default
+                  ];
+                }
                 # other modules...
             ];
         };
@@ -80,7 +83,3 @@ Now dzgui will update together with your flake:
 ```sh
 nix flake update
 ```
-
-## On non flake systems
-
-Good luck.
