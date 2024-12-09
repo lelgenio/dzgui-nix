@@ -22,7 +22,11 @@
 
       nixosModules = rec {
         default = dzgui;
-        dzgui = import ./module.nix;
+        dzgui = pkgs.lib.warn (
+          "The dzgui NixOs module is deprecated and will be removed in the future, "
+          + "check https://github.com/lelgenio/dzgui-nix/blob/main/README.md "
+          + "for instructions on how to install dzgui as a regular package"
+        ) (import ./module.nix);
       };
 
       devShells.${system}.default = pkgs.mkShell {
