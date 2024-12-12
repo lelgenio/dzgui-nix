@@ -4,12 +4,12 @@
 set -xe
 
 latest_commit="$(
-  curl -L -s ${GITHUB_TOKEN:+-u ":${GITHUB_TOKEN}"} https://api.github.com/repos/aclist/dztui/branches/master \
-  | jq -r .commit.sha
+  curl -L -s https://codeberg.org/api/v1/repos/aclist/dztui/branches/dzgui \
+  | jq -r .commit.id
 )"
 
 version="$(
-  curl https://raw.githubusercontent.com/aclist/dztui/$latest_commit/dzgui.sh \
+  curl https://codeberg.org/aclist/dztui/raw/commit/$latest_commit/dzgui.sh \
   | rg '^version=(.*)$' --replace '$1'
 )"
 

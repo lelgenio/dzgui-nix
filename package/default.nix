@@ -2,7 +2,7 @@
   lib,
   stdenv,
   pkgs,
-  fetchFromGitHub,
+  fetchFromGitea,
   makeWrapper,
   curl,
   jq,
@@ -15,13 +15,14 @@
 }:
 stdenv.mkDerivation rec {
   pname = "dzgui";
-  version = "5.5.0";
+  version = "5.5.2";
 
-  src = fetchFromGitHub {
+  src = fetchFromGitea {
+    domain = "codeberg.org";
     owner = "aclist";
     repo = "dztui";
-    rev = "bae6a57e1ee5660a07e3a3c326ec68617b831d31";
-    sha256 = "sha256-x5GSyrbEZoru5p70QVRSFx52Njkhvtg/+qc94MqpOmo=";
+    rev = "32b424da5cfa9955e98d840a5813e0d61cbe0a8a";
+    hash = "sha256-t2wc3SMMFucVLzROco5Babe+URW3Z9pSsob7PNDMTJo=";
   };
 
   postPatch = ''
@@ -67,7 +68,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    homepage = "https://github.com/pronovic/banner";
+    homepage = "https://codeberg.org/aclist/dztui";
     description = "DayZ TUI/GUI server browser";
     license = licenses.gpl3;
 
