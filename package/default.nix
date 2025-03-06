@@ -15,14 +15,14 @@
 }:
 stdenv.mkDerivation rec {
   pname = "dzgui";
-  version = "5.6.4";
+  version = "5.6.5";
 
   src = fetchFromGitea {
     domain = "codeberg.org";
     owner = "aclist";
     repo = "dztui";
-    rev = "785df28f66bd48a6e77eede51d2405f5bf91f535";
-    hash = "sha256-ZTS74pRj7yxDS8KOa29V2Naetlqw2JwuQ0h3xQu1Of8=";
+    rev = "f75ef947c93d3f3ce918c5d8ed7043e5a34999bf";
+    hash = "sha256-5Oufa4oGfRhtihHlof1SFT3QfjQyrcQoxsFDZDOQEUQ=";
   };
 
   postPatch = ''
