@@ -62,7 +62,10 @@ Flake users are assumed to have a `flake.nix` file and a `configuration.nix`.
             modules = [
                 {
                   environment.systemPackages = [
-                    inputs.dzgui-nix.packages.default
+                    # add your system architecture as variable
+                    inputs.dzgui-nix.packages.${<your-system>}.default
+                    # or specify manually.
+                    inputs.dzgui-nix.packages.x86_64-linux.default
                   ];
                 }
                 # other modules...
