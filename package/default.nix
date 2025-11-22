@@ -11,7 +11,7 @@
   xdotool,
   gnome,
   gobject-introspection,
-  wrapGAppsHook,
+  wrapGAppsHook3,
 }:
 stdenv.mkDerivation rec {
   pname = "dzgui";
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     makeWrapper
     gobject-introspection
-    wrapGAppsHook
+    wrapGAppsHook3
   ];
 
   runtimeDeps = [
